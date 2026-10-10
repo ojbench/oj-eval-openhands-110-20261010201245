@@ -40,10 +40,10 @@ class Date {
         }
         d = (int)ord + 1;
     }
+
     static long long maxOrdinal() {
         return toOrdinal(2030, 12, 31);
     }
-
 
 public:
     Date() : _year(1900), _month(1), _day(1) {}
