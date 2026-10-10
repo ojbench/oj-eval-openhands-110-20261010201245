@@ -40,7 +40,11 @@ class Date {
         }
         d = (int)ord + 1;
     }
+
 public:
+    static long long maxOrdinal() {
+        return toOrdinal(2030, 12, 31);
+    }
     Date() : _year(1900), _month(1), _day(1) {}
     Date(int y, int m, int d) {
         if (valid(y,m,d)) { _year=y; _month=m; _day=d; }
@@ -49,6 +53,7 @@ public:
     // pre-increment
     Date& operator++() {
         long long ord = toOrdinal(_year,_month,_day) + 1;
+        if (ord > maxOrdinal()) ord = maxOrdinal();
         fromOrdinal(ord,_year,_month,_day);
         return *this;
     }
@@ -61,6 +66,7 @@ public:
     // pre-decrement
     Date& operator--() {
         long long ord = toOrdinal(_year,_month,_day) - 1;
+        if (ord < 0) ord = 0;
         fromOrdinal(ord,_year,_month,_day);
         return *this;
     }
@@ -72,11 +78,13 @@ public:
     }
     Date operator+(int days) const {
         long long ord = toOrdinal(_year,_month,_day) + days;
+        if (ord > maxOrdinal()) ord = maxOrdinal();
         int y,m,d; fromOrdinal(ord,y,m,d);
         return Date(y,m,d);
     }
     Date operator-(int days) const {
         long long ord = toOrdinal(_year,_month,_day) - days;
+        if (ord < 0) ord = 0;
         int y,m,d; fromOrdinal(ord,y,m,d);
         return Date(y,m,d);
     }
